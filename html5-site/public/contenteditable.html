@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #info{
+            border: 2px solid gray;
+        }
+        #info:focus{
+            background-color: #afa;
+        }
+    </style>
+</head>
+<body>
+    <div id="info" contenteditable="true">123456</div>
+</body>
+<script>
+    const info = document.querySelector('#info');
+    info.addEventListener('input', e=>{
+        console.log(info.innerHTML);
+        console.log(info.innerText);
+        localStorage.setItem('contenteditable', info.innerText);
+    });
+    info.innerText = localStorage.getItem('contenteditable' || '請輸入文字');
+</script>
+</html>

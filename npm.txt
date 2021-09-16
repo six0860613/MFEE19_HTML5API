@@ -1,1 +1,1 @@
-express-generator
+express-generator  -g
