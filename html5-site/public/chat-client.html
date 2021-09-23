@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .afterNickname{
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <span>您的暱稱:</span><input type="text" id="nickname">
+    <button id="nicknameBtn" onclick="doConnect();">送出暱稱</button>
+    <div class="afterNickname">
+        <span>輸入訊息:</span><input type="text" id="msg">
+        <button id="btn" onclick="doSend();">送出</button>
+        <br>
+        <textarea name="" id="ta" cols="50" rows="20"></textarea>
+    </div>
+    <div id="info"></div>
+
+    <script>
+        let socket;
+        const info = document.querySelector('#info');
+
+        const myOpen = event => {
+            if (socket && socket.readyState === WebSocket.OPEN) {
+                const nickname = document.querySelector('#nickname');
+                socket.send(nickname.value); //nickname發送給後端
+                nickname.setAttribute('disabled', 'true'); //鎖定暱稱區
+                document.querySelector('.afterNickname').style.display = 'block'; //顯示輸入區
+                document.querySelector('#nicknameBtn').style.display = 'none'; //隱藏暱稱按鈕
+            } else {
+                alert('WebSocket未連線');
+            }
+        };
+
+        const myMsg = event =>{
+            ta.value += event.data + '\n';
+        };
+
+        function doConnect() {
+            socket = new WebSocket('ws://localhost:3000'); //傳輸協定&路由
+            socket.addEventListener('open', myOpen);
+            socket.addEventListener('message', myMsg);
+            // socket.addEventListener('close', handler);
+        };
+
+        function doSend() {
+            const msg = document.querySelector('#msg').value; //取出#msg input的值
+            if (msg && socket.readyState === WebSocket.OPEN) {
+                socket.send(msg);
+            } else {
+                alert('WebSocket未連線');
+            }
+        };
+    </script>
+</body>
+
+</html>

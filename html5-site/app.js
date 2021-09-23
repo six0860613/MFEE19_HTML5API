@@ -7,7 +7,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const serveIndex = require('serve-index');
-
+const fetch = require('node-fetch');
 var app = express();
 
 // view engine setup
@@ -44,6 +44,12 @@ app.get('/try-sse', (req, res) => {
       // retry:重新連線毫秒數，預設為5秒
       // data:傳送的資料
   }, 2000);
+});
+
+app.get('/yahoo', async (req, res) =>{
+  const r = await fetch('https://tw.yahoo.com/');
+  const content = await r.text();
+  res.send(content);
 });
 
 
