@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn" onclick="doConnect();">Connect Server</button>
+    <input type="text" id="inp">
+    <button id="btn" onclick="doSend();">Send</button>
+
+    <div id="info"></div>
+
+    <script>
+        let socket;
+        const info = document.querySelector('#info');
+        const handler = event =>{
+            info.innerText += event.type + ': \n';
+            if(event.data){
+                info.innerText += event.data + '\n';
+            };
+        };
+
+        function doConnect(){
+            socket = new WebSocket('ws://localhost:3000'); //傳輸協定&路由
+            socket.addEventListener('open', handler);
+            socket.addEventListener('message', handler);
+            socket.addEventListener('close', handler);
+        };
+
+        function doSend(){
+            if(socket && socket.readyState === WebSocket.OPEN){
+                socket.send(document.querySelector('#inp').value);
+            }else{
+                alert('WebSocket未連線');
+            }
+        };
+    </script>
+</body>
+
+</html>

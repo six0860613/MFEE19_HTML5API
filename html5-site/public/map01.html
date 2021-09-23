@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="info"></div>
+
+    <script>
+        const map = new Map();
+        const obj = {};
+
+        const objA = {name: 'Allen'};
+        const objB = {name: 'Bill'};
+
+        obj[objA] = 123;
+        obj[objB] = 456;
+
+        console.log('0: ', obj);
+        console.log('1: ', obj[objA]);
+
+        map.set(objA, 'abc');
+        map.set(objB, 'def');
+        map.set({}, 'def');
+        map.set({}, 'def');
+
+        console.log('2: ', map.get(objA));
+    </script>
+</body>
+
+</html>

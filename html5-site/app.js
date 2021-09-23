@@ -24,6 +24,29 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', serveIndex('public', {'icons': true}));
 app.use('/users', usersRouter);
 
+
+// 在此路由下每隔2秒就傳送的cache
+app.get('/try-sse', (req, res) => {
+  let id = 30;
+  res.writeHead(200, {
+    'Content-Type': 'text/event-stream;charset=UTF-8',
+    'Cache-Control': 'no-cache',
+    'Connection': 'keep-alive',
+
+  });
+
+  setInterval(function(){
+    res.write('id: ' + id++ + '\n');
+    res.write('data: ' + new Date().toString() + '\n\n');
+    
+      // event:自訂的事件名稱，預設為message
+      // id:訊息id（可以是字串）
+      // retry:重新連線毫秒數，預設為5秒
+      // data:傳送的資料
+  }, 2000);
+});
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

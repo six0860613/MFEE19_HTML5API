@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .container {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: #EEEEEE;
+        }
+        .ball {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: red;
+            left: 100px;
+            top: 50px;
+            color: white;
+            text-align: center;
+            line-height: 60px;
+        }
+        .rect {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+            background-color: #96becd;
+            left: 300px;
+            top: 200px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="rect"></div>
+</div>
+
+
+<script>
+    const rect = document.querySelector('.rect');
+
+    rect.addEventListener('dragenter', event => {
+        rect.style.background = '#eea77b';
+    });
+    rect.addEventListener('dragleave', event => {
+        rect.style.background = '#96becd';
+    });
+
+    rect.addEventListener('dragover', event => {
+        event.preventDefault();
+    });
+    rect.addEventListener('drop', event => {
+        event.preventDefault(); //取消瀏覽器的預設行為(file拖曳放開後會開啟檔案)
+        console.log(event.dataTransfer.files);
+    });
+
+</script>
+
+
+</body>
+</html>

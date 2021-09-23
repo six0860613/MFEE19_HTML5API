@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="info"></div>
+
+    <script>
+        const info = document.querySelector('#info');
+
+        const es = new EventSource('/try-sse');
+
+        es.addEventListener('open', function (event) {
+            console.log(event.type, new Date().toString());
+        });
+        es.addEventListener('message', function (event) {
+            console.log(event.lastEventId + ':' + event.data); //相對應路由的id&data
+            info.innerText = event.data;
+        });
+        es.addEventListener('error', function (event) {
+            console.log('error:', event.type, new Date().toString());
+        });
+
+    </script>
+</body>
+
+</html>
